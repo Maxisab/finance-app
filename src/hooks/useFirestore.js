@@ -26,10 +26,10 @@ export const useFirestore = (collection) => {
   const [isCancelled, setIsCancelled] = useState(false)
 
   // collection ref
-  const ref = projec.collection(collection)
+  const ref = projectFirestore.collection(collection)
 
   // only dispatch if not cancelled
-  dispatchIfNotCancelled = (action) => {
+  const dispatchIfNotCancelled = (action) => {
     if (!isCancelled) {
       dispatch(action)
     }
@@ -37,16 +37,17 @@ export const useFirestore = (collection) => {
 
   // add a document
   const addDocument = async (doc) => {
-    dispatch({ type: 'IS_PENDING' })
+    dispatch({ type: "IS_PENDING" })
 
     try {
       const createdAt = timestamp.fromDate(new Date())
-      const addedDocument = await ref.add({ ...doc, createdAt })
-      dispatchIfNotCancelled({ type: 'ADDED_DOCUMENT', payload: addedDocument })
+      const addedDocument = await ref.add({...doc, createdAt })
+      dispatchIfNotCancelled({ type: "ADDED_DOCUMENT", payload: addedDocument })
     }
     catch (err) {
-      dispatchIfNotCancelled({ type: 'ERROR', payload: err.message })
+      dispatchIfNotCancelled({ type: "ERROR", payload: err.message })
     }
+
   }
 
   // delete a document

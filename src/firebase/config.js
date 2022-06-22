@@ -13,6 +13,7 @@ const firebaseConfig = {
 
 // init firebase
 firebase.initializeApp(firebaseConfig)
+firebase.firestore().settings({ experimentalForceLongPolling: true })
 
 // init service
 const projectFirestore = firebase.firestore()
